@@ -15,9 +15,11 @@ export class AflLadderComponent implements OnInit {
   loading: boolean = false;
 
   ngOnInit() {
+    console.log("Setting loading to true");
     this.loading = true ;
     this.ladderService.getLadder('2018',23).subscribe(ladder => {
       this.ladder = ladder;
+      console.log("Setting loading to false");
       this.loading = false;
     })
   }

@@ -186,9 +186,11 @@ var AflLadderComponent = /** @class */ (function () {
     }
     AflLadderComponent.prototype.ngOnInit = function () {
         var _this = this;
+        console.log("Setting loading to true");
         this.loading = true;
         this.ladderService.getLadder('2018', 23).subscribe(function (ladder) {
             _this.ladder = ladder;
+            console.log("Setting loading to false");
             _this.loading = false;
         });
     };
