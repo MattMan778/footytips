@@ -10,6 +10,9 @@
     <option *ngFor="let team of teams" [value]="team">{{team}}</option>
   </select>
 
+  <br>
+  <img *ngIf="loading" src="assets/giphy.gif">
+
   <div *ngIf="fixtures.length > 0">
       <br>
       <table>

@@ -12,10 +12,13 @@ export class AflLadderComponent implements OnInit {
   constructor(private ladderService: AflLadderService) { }
 
   ladder: AflLadder[];
+  loading: boolean = false;
 
   ngOnInit() {
+    this.loading = true ;
     this.ladderService.getLadder('2018',23).subscribe(ladder => {
       this.ladder = ladder;
+      this.loading = false;
     })
   }
 

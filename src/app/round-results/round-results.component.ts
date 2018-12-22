@@ -11,10 +11,13 @@ export class RoundResultsComponent implements OnInit {
 
   constructor(private fixtureService: FixtureService) { }
   fixtures: Fixture[];
+  loading: boolean = false;
 
   ngOnInit() {
+    this.loading = true;
     this.fixtureService.getRoundFixtures('1998',1).subscribe(fixtures => {
       this.fixtures = fixtures; 
+      this.loading = false;
     })
     
   }

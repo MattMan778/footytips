@@ -12,6 +12,7 @@ export class HeadToHeadComponent implements OnInit {
   constructor(private fixtureService: FixtureService) { }
 
   fixtures: Fixture[] = [];
+  loading: boolean = false;
   team1: string;
   team2: string;
   teams: string[] = [
@@ -41,8 +42,10 @@ export class HeadToHeadComponent implements OnInit {
 
   selectChange() {
     if (this.team1 === undefined|| this.team2 === undefined) {return}
+    this.loading = true;
     this.fixtureService.getHead2Head(this.team1,this.team2).subscribe((fixtures) => {
       this.fixtures = fixtures;
+      this.loading = false;
     }
   )}
 

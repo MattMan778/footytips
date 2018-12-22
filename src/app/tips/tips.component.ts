@@ -18,19 +18,24 @@ export class TipsComponent implements OnInit {
   tip: Tip;
   message: string;
   error: boolean = false;
+  loading: boolean = false;
 
   ngOnInit() {
+    this.loading = true;
     this.fixtureService.getRoundFixtures('2018',1).subscribe(fixtures => {
       this.fixtures = fixtures; 
+      this.loading = false;
     })
   }
 
   addTips() {
     this.messageService.clear();
+    this.loading = true;
     this.fixtures.forEach((fixture) => {
       if (typeof fixture.pick === 'undefined') {
         this.messageService.add(`Please make a selection for ${fixture.home_team} vs ${fixture.away_team}`)
         this.error = true ;
+        this.loading = false;
       }
     })
     if (!this.error) {
@@ -39,6 +44,7 @@ export class TipsComponent implements OnInit {
         this.tipsService.addTip(tip).subscribe((tip) => this.tip = tip);
       })
       this.messageService.add("Tips added");
+      this.loading = false;
     }
   }
 }
