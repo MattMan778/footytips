@@ -1,0 +1,49 @@
+<br>
+<div style="padding-left:50px" align="left">
+  <label style="padding-right: 5px">Team 1:  </label>
+  <select [(ngModel)]="team1" (change)="selectChange()"> // value is a string or number
+    <option *ngFor="let team of teams" [value]="team">{{team}}</option>
+  </select>
+  <br>
+  <label style="padding-right:5px">Team 2:  </label>
+  <select [(ngModel)]="team2" (change)="selectChange()"> // value is a string or number
+    <option *ngFor="let team of teams" [value]="team">{{team}}</option>
+  </select>
+
+  <div *ngIf="fixtures.length > 0">
+      <br>
+      <table>
+          <tr align="center">
+            <th>Season</th>
+            <th>Round</th>
+            <th>Date Time</th>
+            <th>Venue</th>
+            <th>Home Team</th>
+            <th></th>
+            <th></th>
+            <th>Away Team</th>
+            <th></th>
+          </tr>
+            <tr *ngFor="let fixture of fixtures;index as i">
+                <td>{{fixture.season}}</td>
+                <td>{{fixture.round}}</td>
+                <td>{{fixture.date_time}}</td>
+                <td>{{fixture.venue}}</td>
+                <div [ngStyle]="{'font-weight': boldWinner(fixture,'home')}">
+                    <td >{{fixture.home_team}}</td>
+                </div> 
+                <td>{{fixture.home_team_goals}}.{{fixture.home_team_behinds}}.{{fixture.home_team_points}}</td>
+                <td>{{getResult(fixture)}}</td>
+                <div [ngStyle]="{'font-weight': boldWinner(fixture,'away')}">
+                    <td>{{fixture.away_team}}</td>
+                </div>
+                <td>{{fixture.away_team_goals}}.{{fixture.away_team_behinds}}.{{fixture.away_team_points}}</td>
+            </tr>
+        
+          
+        </table>
+  </div>
+  
+  </div>
+
+

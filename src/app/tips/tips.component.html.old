@@ -1,0 +1,43 @@
+<mat-tab-group animationDuration="0ms">
+        <mat-tab label="Enter Tips">
+          <div align="left">
+            <h1>Tips for round 1</h1>
+          </div>
+          <table>
+            <tr>
+              <th>Date Time</th>
+              <th>Venue</th>
+              <th></th>
+              <th>Home Team</th>
+              <th>Away Team</th>
+              <th></th>
+            </tr>
+            <tr *ngFor="let fixture of fixtures;index as i" align="center">
+              <td>{{fixture.date_time}}</td>
+              <td>{{fixture.venue}}</td>
+              <td><input type="radio" name="tip{{i}}" [(ngModel)]="fixtures[i].pick" value="home"></td>
+              <td>{{fixture.home_team}}</td>
+              <td>{{fixture.away_team}}</td>
+              <td><input type="radio" name="tip{{i}}" [(ngModel)]="fixtures[i].pick" value="away"></td>
+            </tr>
+          </table>
+          <br>
+          <div align="left">
+              <button align="left" (click)="addTips()">Add Tips</button>
+            </div>
+        </mat-tab>
+        <mat-tab label="AFL Ladder">
+          <h1>AFL Ladder for round 1</h1>
+          <p>...</p>
+        </mat-tab>
+        <mat-tab label="Tipsters Ladder">
+          <h1>AFL Ladder for round 1</h1>
+          <p>...</p>
+        </mat-tab>
+        <mat-tab label="AFL results">
+          <h1>AFL Results for round 1</h1>
+          <p>...</p>
+        </mat-tab>
+      </mat-tab-group>
+      
+      

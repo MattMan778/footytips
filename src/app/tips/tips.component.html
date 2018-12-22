@@ -1,0 +1,34 @@
+<br><br>
+
+<form name="myForm">
+  <div style="padding-left:50px">
+    <div align="left">
+        <h1>Tips for round 1</h1>
+      </div>
+      <br><br>
+      <table>
+        <tr>
+          <th>Date Time</th>
+          <th>Venue</th>
+          <th></th>
+          <th>Home Team</th>
+          <th>Away Team</th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let fixture of fixtures;index as i" align="left">
+          <td style="padding-left:10px;padding-right:10px">{{fixture.date_time}}</td>
+          <td style="padding-left:10px;padding-right:10px">{{fixture.venue}}</td>
+          <td style="padding-left:10px;padding-right:10px"><input type="radio" name="tip{{i}}" [(ngModel)]="fixtures[i].pick" value="home"></td>
+          <td style="padding-left:10px;padding-right:10px">{{fixture.home_team}}</td>
+          <td style="padding-left:10px;padding-right:10px">{{fixture.away_team}}</td>
+          <td style="padding-left:10px;padding-right:10px"><input type="radio" name="tip{{i}}" [(ngModel)]="fixtures[i].pick" value="away"></td>
+        </tr>
+      </table>
+      <br>
+      <div align="left">
+          <button align="left" (click)="addTips()">Add Tips</button>
+        </div>
+        <br>
+      <app-messages></app-messages>
+  </div>
+</form>

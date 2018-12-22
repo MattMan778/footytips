@@ -1,0 +1,30 @@
+<br><br>
+
+<div style="padding-left:50px">
+  <h2 align="left">AFL Ladder for round 23</h2>
+  <br><br>
+  <table>
+    <tr align=left>
+    <th style="padding-left:10px;padding-right:10px">Team Name</th>
+    <th style="padding-left:10px;padding-right:10px">P</th>
+    <th style="padding-left:10px;padding-right:10px">W</th>
+    <th style="padding-left:10px;padding-right:10px">L</th>
+    <th style="padding-left:10px;padding-right:10px">D</th>
+    <th style="padding-left:10px;padding-right:10px" align=center>For</th>
+    <th style="padding-left:10px;padding-right:10px" align=center>Against</th>
+    <th style="padding-left:10px;padding-right:10px" align=center>%</th>
+    <th style="padding-left:10px;padding-right:10px" align=center>Pts</th>
+    </tr>
+    <tr *ngFor="let line of ladder;index as i" align="left">
+      <td style="padding-left:10px;padding-right:10px">{{line.team}}</td>
+      <td style="padding-left:10px;padding-right:10px">{{line.played}}</td>
+      <td style="padding-left:10px;padding-right:10px">{{line.wins}}</td>
+      <td style="padding-left:10px;padding-right:10px">{{line.losses}}</td>
+      <td style="padding-left:10px;padding-right:10px">{{line.draws}}</td>
+      <td style="padding-left:10px;padding-right:10px">{{line.for_points}}</td>
+      <td style="padding-left:10px;padding-right:10px">{{line.against}}</td>
+      <td style="padding-left:10px;padding-right:10px">{{line.percentage}}</td>
+      <td style="padding-left:10px;padding-right:10px">{{line.points}}</td>
+    </tr>
+  </table>
+</div>

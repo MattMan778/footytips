@@ -1,0 +1,34 @@
+<br><br>
+
+  <div style="padding-left:50px">
+    <div align="left">
+        <h1>Results for round 1 1998</h1>
+    </div>
+    <br><br>
+ 
+    <table>
+      <tr>
+        <th>Date Time</th>
+        <th>Venue</th>
+        <th>Home Team</th>
+        <th></th>
+        <th></th>
+        <th>Away Team</th>
+        <th></th>
+      </tr>
+        <tr *ngFor="let fixture of fixtures;index as i">
+            <td>{{fixture.date_time}}</td>
+            <td>{{fixture.venue}}</td>
+            <div [ngStyle]="{'font-weight': boldWinner(fixture,'home')}">
+                <td >{{fixture.home_team}}</td>
+            </div> 
+            <td>{{fixture.home_team_goals}}.{{fixture.home_team_behinds}}.{{fixture.home_team_points}}</td>
+            <td>{{getResult(fixture)}}</td>
+            <div [ngStyle]="{'font-weight': boldWinner(fixture,'away')}">
+                <td>{{fixture.away_team}}</td>
+            </div>
+            <td>{{fixture.away_team_goals}}.{{fixture.away_team_behinds}}.{{fixture.away_team_points}}</td>
+        </tr>
+
+      
+    </table>
