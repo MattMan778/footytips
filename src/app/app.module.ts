@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule, ClassProvider } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -56,7 +56,7 @@ const LOGGING_INTERCEPTOR_PROVIDER: ClassProvider = {
     MatMenuModule,
     MatIconModule
   ],
-  providers: [LOGGING_INTERCEPTOR_PROVIDER],
+  providers: [LOGGING_INTERCEPTOR_PROVIDER, Title],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
