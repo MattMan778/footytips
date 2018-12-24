@@ -999,7 +999,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<br><br>\n\n  <div style=\"padding-left:50px\">\n    <div align=\"left\">\n        <h1>Results for round 1 1998</h1>\n    </div>\n    <br><br>\n    <img *ngIf=\"loading\" src=\"assets/giphy.gif\">\n\n    <table>\n      <tr>\n        <th>Date Time</th>\n        <th>Venue</th>\n        <th>Home Team</th>\n        <th></th>\n        <th></th>\n        <th>Away Team</th>\n        <th></th>\n      </tr>\n        <tr *ngFor=\"let fixture of fixtures;index as i\">\n            <td>{{fixture.date_time}}</td>\n            <td>{{fixture.venue}}</td>\n            <div [ngStyle]=\"{'font-weight': boldWinner(fixture,'home')}\">\n                <td >{{fixture.home_team}}</td>\n            </div> \n            <td>{{fixture.home_team_goals}}.{{fixture.home_team_behinds}}.{{fixture.home_team_points}}</td>\n            <td>{{getResult(fixture)}}</td>\n            <div [ngStyle]=\"{'font-weight': boldWinner(fixture,'away')}\">\n                <td>{{fixture.away_team}}</td>\n            </div>\n            <td>{{fixture.away_team_goals}}.{{fixture.away_team_behinds}}.{{fixture.away_team_points}}</td>\n        </tr>\n\n      \n    </table>\n"
+module.exports = "<br><br>\n\n  <div style=\"padding-left:50px\">\n    <div align=\"left\">\n        <h1>Results for round 1 1998</h1>\n    </div>\n    <br><br>\n    <img *ngIf=\"loading\" src=\"assets/giphy.gif\">\n\n    <table class=\"table table-striped table-responsive\">\n      <tr>\n        <th *ngIf=\"largeScreen\">Date Time</th>\n        <th>Venue</th>\n        <th>Home Team</th>\n        <th></th>\n        <th *ngIf=\"largeScreen\"></th>\n        <th>Away Team</th>\n        <th></th>\n      </tr>\n        <tr *ngFor=\"let fixture of fixtures;index as i\">\n            <td *ngIf=\"largeScreen\">{{fixture.date_time}}</td>\n            <td>{{fixture.venue}}</td>\n            <div [ngStyle]=\"{'font-weight': boldWinner(fixture,'home')}\">\n                <td >{{fixture.home_team}}</td>\n            </div> \n            <td>{{fixture.home_team_goals}}.{{fixture.home_team_behinds}}.{{fixture.home_team_points}}</td>\n            <td *ngIf=\"largeScreen\">{{getResult(fixture)}}</td>\n            <div [ngStyle]=\"{'font-weight': boldWinner(fixture,'away')}\">\n                <td>{{fixture.away_team}}</td>\n            </div>\n            <td>{{fixture.away_team_goals}}.{{fixture.away_team_behinds}}.{{fixture.away_team_points}}</td>\n        </tr>\n\n      \n    </table>\n"
 
 /***/ }),
 
@@ -1031,8 +1031,12 @@ var RoundResultsComponent = /** @class */ (function () {
         this.fixtureService = fixtureService;
         this.loading = false;
     }
+    RoundResultsComponent.prototype.onResize = function (event) {
+        this.largeScreen = event.target.innerWidth > 900 ? true : false;
+    };
     RoundResultsComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.largeScreen = window.innerWidth > 900 ? true : false;
         this.loading = true;
         this.fixtureService.getRoundFixtures('1998', 1).subscribe(function (fixtures) {
             _this.fixtures = fixtures;
@@ -1065,6 +1069,12 @@ var RoundResultsComponent = /** @class */ (function () {
         }
         return result;
     };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('window:resize', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], RoundResultsComponent.prototype, "onResize", null);
     RoundResultsComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-round-results',

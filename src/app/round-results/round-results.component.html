@@ -7,24 +7,24 @@
     <br><br>
     <img *ngIf="loading" src="assets/giphy.gif">
 
-    <table>
+    <table class="table table-striped table-responsive">
       <tr>
-        <th>Date Time</th>
+        <th *ngIf="largeScreen">Date Time</th>
         <th>Venue</th>
         <th>Home Team</th>
         <th></th>
-        <th></th>
+        <th *ngIf="largeScreen"></th>
         <th>Away Team</th>
         <th></th>
       </tr>
         <tr *ngFor="let fixture of fixtures;index as i">
-            <td>{{fixture.date_time}}</td>
+            <td *ngIf="largeScreen">{{fixture.date_time}}</td>
             <td>{{fixture.venue}}</td>
             <div [ngStyle]="{'font-weight': boldWinner(fixture,'home')}">
                 <td >{{fixture.home_team}}</td>
             </div> 
             <td>{{fixture.home_team_goals}}.{{fixture.home_team_behinds}}.{{fixture.home_team_points}}</td>
-            <td>{{getResult(fixture)}}</td>
+            <td *ngIf="largeScreen">{{getResult(fixture)}}</td>
             <div [ngStyle]="{'font-weight': boldWinner(fixture,'away')}">
                 <td>{{fixture.away_team}}</td>
             </div>

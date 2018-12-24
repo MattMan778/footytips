@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { AflLadderService } from '../afl-ladder.service';
 import { AflLadder} from '../afl-ladder';
 
@@ -13,6 +13,7 @@ export class AflLadderComponent implements OnInit {
 
   ladder: AflLadder[];
   loading: boolean = false;
+  
 
   ngOnInit() {
     this.loading = true ;

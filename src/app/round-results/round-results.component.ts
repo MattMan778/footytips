@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { FixtureService } from '../fixture.service';
 import { Fixture } from '../fixture';
 
@@ -12,8 +12,15 @@ export class RoundResultsComponent implements OnInit {
   constructor(private fixtureService: FixtureService) { }
   fixtures: Fixture[];
   loading: boolean = false;
+  largeScreen: boolean;
+
+  @HostListener('window:resize',['$event'])
+  onResize(event) {
+    this.largeScreen = event.target.innerWidth > 900 ? true : false;
+  }
 
   ngOnInit() {
+    this.largeScreen = window.innerWidth > 900 ? true : false;
     this.loading = true;
     this.fixtureService.getRoundFixtures('1998',1).subscribe(fixtures => {
       this.fixtures = fixtures; 
