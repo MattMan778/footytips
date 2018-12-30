@@ -184,14 +184,24 @@ var AflLadderComponent = /** @class */ (function () {
         this.ladderService = ladderService;
         this.loading = false;
     }
+    AflLadderComponent.prototype.onResize = function (event) {
+        this.largeScreen = event.target.innerWidth > 900 ? true : false;
+    };
     AflLadderComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.largeScreen = window.innerWidth > 900 ? true : false;
         this.loading = true;
         this.ladderService.getLadder('2018', 23).subscribe(function (ladder) {
             _this.ladder = ladder;
             _this.loading = false;
         });
     };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('window:resize', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], AflLadderComponent.prototype, "onResize", null);
     AflLadderComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-afl-ladder',
@@ -412,7 +422,7 @@ module.exports = "/*!\n * Bootstrap v4.2.1 (https://getbootstrap.com/)\n * Copyr
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<br><br>\n<div style=\"text-align:center\">\n  <h1>\n    Kerrie's footy tipping\n  </h1>\n  <br><br>\n  <nav mat-tab-nav-bar>\n      <a mat-tab-link routerLink=\"tips\">Tips</a>\n      <a mat-tab-link routerLink=\"aflLadder\">AFL Ladder</a>\n      <a mat-tab-link routerLink=\"tipLadder\">Tipsters Ladder</a>\n      <a mat-tab-link routerLink=\"aflResults\">AFL Results</a>\n      <a mat-tab-link routerLink=\"admin\">Admin</a>\n  </nav>\n  <router-outlet></router-outlet>\n"
+module.exports = "<br><br>\n<div style=\"text-align:center\">\n  <h1>\n    Kerrie's footy tipping\n  </h1>\n  <br><br>\n  <nav class=\"navbar navbar-expand-lg navbar-dark bg-light\">\n      <a class=\"nav-item nav-link\" routerLink=\"tips\">Tips</a>\n      <a class=\"nav-item nav-link\"  routerLink=\"aflLadder\">AFL Ladder</a>\n      <a class=\"nav-item nav-link\"  routerLink=\"tipLadder\">Tipsters Ladder</a>\n      <a class=\"nav-item nav-link\"  routerLink=\"aflResults\">AFL Results</a>\n      <a class=\"nav-item nav-link\"  routerLink=\"admin\">Admin</a>\n  </nav>\n  <router-outlet></router-outlet>\n"
 
 /***/ }),
 
@@ -700,7 +710,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<br>\n<div style=\"padding-left:50px\" align=\"left\">\n  <label style=\"padding-right: 5px\">Team 1:  </label>\n  <select [(ngModel)]=\"team1\" (change)=\"selectChange()\"> // value is a string or number\n    <option *ngFor=\"let team of teams\" [value]=\"team\">{{team}}</option>\n  </select>\n  <br>\n  <label style=\"padding-right:5px\">Team 2:  </label>\n  <select [(ngModel)]=\"team2\" (change)=\"selectChange()\"> // value is a string or number\n    <option *ngFor=\"let team of teams\" [value]=\"team\">{{team}}</option>\n  </select>\n\n  <br>\n  <img *ngIf=\"loading\" src=\"assets/giphy.gif\">\n\n  <div *ngIf=\"fixtures.length > 0\">\n      <br>\n      <table class=\"table table-striped table-responsive table-sm\">\n          <tr align=\"center\">\n            <th>Season</th>\n            <th>Round</th>\n            <th>Date Time</th>\n            <th>Venue</th>\n            <th>Home Team</th>\n            <th></th>\n            <th></th>\n            <th>Away Team</th>\n            <th></th>\n          </tr>\n            <tr *ngFor=\"let fixture of fixtures;index as i\">\n                <td>{{fixture.season}}</td>\n                <td>{{fixture.round}}</td>\n                <td>{{fixture.date_time}}</td>\n                <td>{{fixture.venue}}</td>\n                <div [ngStyle]=\"{'font-weight': boldWinner(fixture,'home')}\">\n                    <td >{{fixture.home_team}}</td>\n                </div> \n                <td>{{fixture.home_team_goals}}.{{fixture.home_team_behinds}}.{{fixture.home_team_points}}</td>\n                <td>{{getResult(fixture)}}</td>\n                <div [ngStyle]=\"{'font-weight': boldWinner(fixture,'away')}\">\n                    <td>{{fixture.away_team}}</td>\n                </div>\n                <td>{{fixture.away_team_goals}}.{{fixture.away_team_behinds}}.{{fixture.away_team_points}}</td>\n            </tr>\n        \n          \n        </table>\n  </div>\n  \n  </div>\n\n\n"
+module.exports = "<br>\n<div style=\"padding-left:50px\" align=\"left\">\n  <label style=\"padding-right: 5px\">Team 1:  </label>\n  <select [(ngModel)]=\"team1\" (change)=\"selectChange()\"> // value is a string or number\n    <option *ngFor=\"let team of teams\" [value]=\"team\">{{team}}</option>\n  </select>\n  <br>\n  <label style=\"padding-right:5px\">Team 2:  </label>\n  <select [(ngModel)]=\"team2\" (change)=\"selectChange()\"> // value is a string or number\n    <option *ngFor=\"let team of teams\" [value]=\"team\">{{team}}</option>\n  </select>\n\n  <br>\n  <img *ngIf=\"loading\" src=\"assets/giphy.gif\">\n\n  <div *ngIf=\"fixtures.length > 0\">\n      <br>\n      <table class=\"table table-striped table-responsive table-sm\">\n          <tr align=\"center\">\n            <th>Season</th>\n            <th>Round</th>\n            <th *ngIf=\"largeScreen\">Date Time</th>\n            <th>Venue</th>\n            <th>Home Team</th>\n            <th></th>\n            <th *ngIf=\"largeScreen\"></th>\n            <th>Away Team</th>\n            <th></th>\n          </tr>\n            <tr *ngFor=\"let fixture of fixtures;index as i\">\n                <td>{{fixture.season}}</td>\n                <td>{{fixture.round}}</td>\n                <td *ngIf=\"largeScreen\">{{fixture.date_time}}</td>\n                <td>{{fixture.venue}}</td>\n                <div [ngStyle]=\"{'font-weight': boldWinner(fixture,'home')}\">\n                    <td >{{fixture.home_team}}</td>\n                </div> \n                <td>{{fixture.home_team_goals}}.{{fixture.home_team_behinds}}.{{fixture.home_team_points}}</td>\n                <td *ngIf=\"largeScreen\">{{getResult(fixture)}}</td>\n                <div [ngStyle]=\"{'font-weight': boldWinner(fixture,'away')}\">\n                    <td>{{fixture.away_team}}</td>\n                </div>\n                <td>{{fixture.away_team_goals}}.{{fixture.away_team_behinds}}.{{fixture.away_team_points}}</td>\n            </tr>\n        \n          \n        </table>\n  </div>\n  \n  </div>\n\n\n"
 
 /***/ }),
 
@@ -754,7 +764,11 @@ var HeadToHeadComponent = /** @class */ (function () {
             'Western Bulldogs'
         ];
     }
+    HeadToHeadComponent.prototype.onResize = function (event) {
+        this.largeScreen = event.target.innerWidth > 900 ? true : false;
+    };
     HeadToHeadComponent.prototype.ngOnInit = function () {
+        this.largeScreen = window.innerWidth > 900 ? true : false;
     };
     HeadToHeadComponent.prototype.selectChange = function () {
         var _this = this;
@@ -793,6 +807,12 @@ var HeadToHeadComponent = /** @class */ (function () {
         }
         return result;
     };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('window:resize', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], HeadToHeadComponent.prototype, "onResize", null);
     HeadToHeadComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-head-to-head',
@@ -1308,7 +1328,7 @@ module.exports = ".mat-tab-link-active,\r\n.mat-tab-label-active {\r\n    backgr
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<br><br>\n\n<form name=\"myForm\">\n  <div style=\"padding-left:50px\">\n    <div align=\"left\">\n        <h1>Tips for round 1</h1>\n      </div>\n      <br><br>\n      <img *ngIf=\"loading\" src=\"assets/giphy.gif\">\n      <table>\n        <tr>\n          <th>Date Time</th>\n          <th>Venue</th>\n          <th></th>\n          <th>Home Team</th>\n          <th>Away Team</th>\n          <th></th>\n        </tr>\n        <tr *ngFor=\"let fixture of fixtures;index as i\" align=\"left\">\n          <td style=\"padding-left:10px;padding-right:10px\">{{fixture.date_time}}</td>\n          <td style=\"padding-left:10px;padding-right:10px\">{{fixture.venue}}</td>\n          <td style=\"padding-left:10px;padding-right:10px\"><input type=\"radio\" name=\"tip{{i}}\" [(ngModel)]=\"fixtures[i].pick\" value=\"home\"></td>\n          <td style=\"padding-left:10px;padding-right:10px\">{{fixture.home_team}}</td>\n          <td style=\"padding-left:10px;padding-right:10px\">{{fixture.away_team}}</td>\n          <td style=\"padding-left:10px;padding-right:10px\"><input type=\"radio\" name=\"tip{{i}}\" [(ngModel)]=\"fixtures[i].pick\" value=\"away\"></td>\n        </tr>\n      </table>\n      <br>\n      <div align=\"left\">\n          <button align=\"left\" (click)=\"addTips()\">Add Tips</button>\n        </div>\n        <br>\n      <app-messages></app-messages>\n  </div>\n</form>\n"
+module.exports = "<br><br>\n\n<form name=\"myForm\">\n  <div style=\"padding-left:50px\">\n    <div align=\"left\">\n        <h1>Tips for round 1</h1>\n      </div>\n      <br><br>\n      <img *ngIf=\"loading\" src=\"assets/giphy.gif\">\n      <table class=\"table table-responsive table-striped\">\n        <tr>\n          <th>Date Time</th>\n          <th>Venue</th>\n          <th></th>\n          <th>Home Team</th>\n          <th>Away Team</th>\n          <th></th>\n        </tr>\n        <tr *ngFor=\"let fixture of fixtures;index as i\" align=\"left\">\n          <td style=\"padding-left:10px;padding-right:10px\">{{fixture.date_time}}</td>\n          <td style=\"padding-left:10px;padding-right:10px\">{{fixture.venue}}</td>\n          <td style=\"padding-left:10px;padding-right:10px\"><input type=\"radio\" name=\"tip{{i}}\" [(ngModel)]=\"fixtures[i].pick\" value=\"home\"></td>\n          <td style=\"padding-left:10px;padding-right:10px\">{{fixture.home_team}}</td>\n          <td style=\"padding-left:10px;padding-right:10px\">{{fixture.away_team}}</td>\n          <td style=\"padding-left:10px;padding-right:10px\"><input type=\"radio\" name=\"tip{{i}}\" [(ngModel)]=\"fixtures[i].pick\" value=\"away\"></td>\n        </tr>\n      </table>\n      <br>\n      <div align=\"left\">\n          <button align=\"left\" (click)=\"addTips()\">Add Tips</button>\n        </div>\n        <br>\n      <app-messages></app-messages>\n  </div>\n</form>\n"
 
 /***/ }),
 

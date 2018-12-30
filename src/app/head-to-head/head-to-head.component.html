@@ -19,24 +19,24 @@
           <tr align="center">
             <th>Season</th>
             <th>Round</th>
-            <th>Date Time</th>
+            <th *ngIf="largeScreen">Date Time</th>
             <th>Venue</th>
             <th>Home Team</th>
             <th></th>
-            <th></th>
+            <th *ngIf="largeScreen"></th>
             <th>Away Team</th>
             <th></th>
           </tr>
             <tr *ngFor="let fixture of fixtures;index as i">
                 <td>{{fixture.season}}</td>
                 <td>{{fixture.round}}</td>
-                <td>{{fixture.date_time}}</td>
+                <td *ngIf="largeScreen">{{fixture.date_time}}</td>
                 <td>{{fixture.venue}}</td>
                 <div [ngStyle]="{'font-weight': boldWinner(fixture,'home')}">
                     <td >{{fixture.home_team}}</td>
                 </div> 
                 <td>{{fixture.home_team_goals}}.{{fixture.home_team_behinds}}.{{fixture.home_team_points}}</td>
-                <td>{{getResult(fixture)}}</td>
+                <td *ngIf="largeScreen">{{getResult(fixture)}}</td>
                 <div [ngStyle]="{'font-weight': boldWinner(fixture,'away')}">
                     <td>{{fixture.away_team}}</td>
                 </div>

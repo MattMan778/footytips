@@ -13,9 +13,15 @@ export class AflLadderComponent implements OnInit {
 
   ladder: AflLadder[];
   loading: boolean = false;
-  
+  largeScreen: boolean;
+
+  @HostListener('window:resize',['$event'])
+  onResize(event) {
+    this.largeScreen = event.target.innerWidth > 900 ? true : false;
+  }
 
   ngOnInit() {
+    this.largeScreen = window.innerWidth > 900 ? true : false;  
     this.loading = true ;
     this.ladderService.getLadder('2018',23).subscribe(ladder => {
       this.ladder = ladder;

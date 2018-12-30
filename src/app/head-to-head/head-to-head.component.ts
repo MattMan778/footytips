@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Fixture } from '../fixture';
 import { FixtureService } from '../fixture.service';
 
@@ -37,7 +37,15 @@ export class HeadToHeadComponent implements OnInit {
     ,'Western Bulldogs'
   ]
 
+  largeScreen: boolean;
+
+  @HostListener('window:resize',['$event'])
+  onResize(event) {
+    this.largeScreen = event.target.innerWidth > 900 ? true : false;
+  }
+
   ngOnInit() {
+    this.largeScreen = window.innerWidth > 900 ? true : false;
   }
 
   selectChange() {
