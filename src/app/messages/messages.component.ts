@@ -13,4 +13,10 @@ export class MessagesComponent implements OnInit {
   ngOnInit() {
   }
 
+  onDomChange($event: Event): void {
+    //console.log($event);
+    //console.log(document.body.scrollHeight);
+    window.scrollTo(0,window.document.body.scrollHeight);  
+  }
+
 }

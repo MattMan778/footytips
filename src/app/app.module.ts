@@ -24,6 +24,7 @@ import { HeadToHeadComponent } from './head-to-head/head-to-head.component';
 import { AdminComponent } from './admin/admin.component';
 import { ProxyComponent } from './proxy/proxy.component';
 import { EnterResultsComponent } from './enter-results/enter-results.component';
+import { DomChangeDirective } from './dom-change.directive';
 
 const LOGGING_INTERCEPTOR_PROVIDER: ClassProvider = {
   provide: HTTP_INTERCEPTORS ,
@@ -44,7 +45,8 @@ const LOGGING_INTERCEPTOR_PROVIDER: ClassProvider = {
     HeadToHeadComponent,
     AdminComponent,
     ProxyComponent,
-    EnterResultsComponent
+    EnterResultsComponent,
+    DomChangeDirective
   ],
   imports: [
     BrowserModule,

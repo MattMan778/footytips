@@ -504,12 +504,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _admin_admin_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./admin/admin.component */ "./src/app/admin/admin.component.ts");
 /* harmony import */ var _proxy_proxy_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./proxy/proxy.component */ "./src/app/proxy/proxy.component.ts");
 /* harmony import */ var _enter_results_enter_results_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./enter-results/enter-results.component */ "./src/app/enter-results/enter-results.component.ts");
+/* harmony import */ var _dom_change_directive__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./dom-change.directive */ "./src/app/dom-change.directive.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -555,7 +557,8 @@ var AppModule = /** @class */ (function () {
                 _head_to_head_head_to_head_component__WEBPACK_IMPORTED_MODULE_18__["HeadToHeadComponent"],
                 _admin_admin_component__WEBPACK_IMPORTED_MODULE_19__["AdminComponent"],
                 _proxy_proxy_component__WEBPACK_IMPORTED_MODULE_20__["ProxyComponent"],
-                _enter_results_enter_results_component__WEBPACK_IMPORTED_MODULE_21__["EnterResultsComponent"]
+                _enter_results_enter_results_component__WEBPACK_IMPORTED_MODULE_21__["EnterResultsComponent"],
+                _dom_change_directive__WEBPACK_IMPORTED_MODULE_22__["DomChangeDirective"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -572,6 +575,63 @@ var AppModule = /** @class */ (function () {
         })
     ], AppModule);
     return AppModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/dom-change.directive.ts":
+/*!*****************************************!*\
+  !*** ./src/app/dom-change.directive.ts ***!
+  \*****************************************/
+/*! exports provided: DomChangeDirective */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DomChangeDirective", function() { return DomChangeDirective; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var DomChangeDirective = /** @class */ (function () {
+    function DomChangeDirective(elementRef) {
+        var _this = this;
+        this.elementRef = elementRef;
+        this.domChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        var element = this.elementRef.nativeElement;
+        this.changes = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) { return _this.domChange.emit(mutation); });
+        });
+        this.changes.observe(element, {
+            attributes: true,
+            childList: true,
+            characterData: true
+        });
+        //console.log("Registered DOM change observer");
+    }
+    DomChangeDirective.prototype.ngOnDestroy = function () {
+        this.changes.disconnect();
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], DomChangeDirective.prototype, "domChange", void 0);
+    DomChangeDirective = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"])({
+            selector: '[domChange]'
+        }),
+        __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]])
+    ], DomChangeDirective);
+    return DomChangeDirective;
 }());
 
 
@@ -890,7 +950,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"messageService.messages.length\">\n\n  <div align=\"left\"><h3>Messages</h3></div>\n  <div style=\"color:red\" align=\"left\" *ngFor='let message of messageService.messages'> {{message}} </div>\n\n</div>"
+module.exports = "<div *ngIf=\"messageService.messages.length\">\n\n  <div align=\"left\"><h3>Messages</h3></div>\n  <div (domChange)=\"onDomChange($event)\" style=\"color:red\" align=\"left\" *ngFor='let message of messageService.messages'> {{message}} </div>\n\n</div>"
 
 /***/ }),
 
@@ -922,6 +982,11 @@ var MessagesComponent = /** @class */ (function () {
         this.messageService = messageService;
     }
     MessagesComponent.prototype.ngOnInit = function () {
+    };
+    MessagesComponent.prototype.onDomChange = function ($event) {
+        //console.log($event);
+        //console.log(document.body.scrollHeight);
+        window.scrollTo(0, window.document.body.scrollHeight);
     };
     MessagesComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1328,7 +1393,7 @@ module.exports = ".mat-tab-link-active,\r\n.mat-tab-label-active {\r\n    backgr
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<br><br>\n\n<form name=\"myForm\">\n  <div style=\"padding-left:50px\">\n    <div align=\"left\">\n        <h1>Tips for round 1</h1>\n      </div>\n      <br><br>\n      <img *ngIf=\"loading\" src=\"assets/giphy.gif\">\n      <table class=\"table table-responsive table-striped\">\n        <tr>\n          <th>Date Time</th>\n          <th>Venue</th>\n          <th></th>\n          <th>Home Team</th>\n          <th>Away Team</th>\n          <th></th>\n        </tr>\n        <tr *ngFor=\"let fixture of fixtures;index as i\" align=\"left\">\n          <td style=\"padding-left:10px;padding-right:10px\">{{fixture.date_time}}</td>\n          <td style=\"padding-left:10px;padding-right:10px\">{{fixture.venue}}</td>\n          <td style=\"padding-left:10px;padding-right:10px\"><input type=\"radio\" name=\"tip{{i}}\" [(ngModel)]=\"fixtures[i].pick\" value=\"home\"></td>\n          <td style=\"padding-left:10px;padding-right:10px\">{{fixture.home_team}}</td>\n          <td style=\"padding-left:10px;padding-right:10px\">{{fixture.away_team}}</td>\n          <td style=\"padding-left:10px;padding-right:10px\"><input type=\"radio\" name=\"tip{{i}}\" [(ngModel)]=\"fixtures[i].pick\" value=\"away\"></td>\n        </tr>\n      </table>\n      <br>\n      <div align=\"left\">\n          <button align=\"left\" (click)=\"addTips()\">Add Tips</button>\n        </div>\n        <br>\n      <app-messages></app-messages>\n  </div>\n</form>\n"
+module.exports = "<br><br>\n\n<form name=\"myForm\">\n  <div id=\"scrollWindow\" style=\"padding-left:50px\">\n    <div align=\"left\">\n        <h1>Tips for round 1</h1>\n      </div>\n      <br><br>\n      <img *ngIf=\"loading\" src=\"assets/giphy.gif\">\n      <table class=\"table table-responsive table-striped\">\n        <tr>\n          <th>Date Time</th>\n          <th>Venue</th>\n          <th></th>\n          <th>Home Team</th>\n          <th>Away Team</th>\n          <th></th>\n        </tr>\n        <tr *ngFor=\"let fixture of fixtures;index as i\" align=\"left\">\n          <td style=\"padding-left:10px;padding-right:10px\">{{fixture.date_time}}</td>\n          <td style=\"padding-left:10px;padding-right:10px\">{{fixture.venue}}</td>\n          <td style=\"padding-left:10px;padding-right:10px\"><input type=\"radio\" name=\"tip{{i}}\" [(ngModel)]=\"fixtures[i].pick\" value=\"home\"></td>\n          <td style=\"padding-left:10px;padding-right:10px\">{{fixture.home_team}}</td>\n          <td style=\"padding-left:10px;padding-right:10px\">{{fixture.away_team}}</td>\n          <td style=\"padding-left:10px;padding-right:10px\"><input type=\"radio\" name=\"tip{{i}}\" [(ngModel)]=\"fixtures[i].pick\" value=\"away\"></td>\n        </tr>\n      </table>\n      <br>\n      <div align=\"left\">\n          <button align=\"left\" (click)=\"addTips()\">Add Tips</button>\n        </div>\n        <br>\n      <app-messages></app-messages>\n  </div>\n  <div id=\"scrollEnd\"></div>\n</form>\n"
 
 /***/ }),
 
@@ -1381,6 +1446,7 @@ var TipsComponent = /** @class */ (function () {
         var _this = this;
         this.messageService.clear();
         this.loading = true;
+        this.error = false;
         this.fixtures.forEach(function (fixture) {
             if (typeof fixture.pick === 'undefined') {
                 _this.messageService.add("Please make a selection for " + fixture.home_team + " vs " + fixture.away_team);
@@ -1397,6 +1463,10 @@ var TipsComponent = /** @class */ (function () {
             this.loading = false;
         }
     };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('scrollWindow'),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"])
+    ], TipsComponent.prototype, "myScrollContainer", void 0);
     TipsComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-tips',

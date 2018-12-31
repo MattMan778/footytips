@@ -18,4 +18,5 @@ export class AppComponent {
   }
 
   title = "Kerrie's footy tipping";
+  
 }

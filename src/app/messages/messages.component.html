@@ -1,6 +1,6 @@
 <div *ngIf="messageService.messages.length">
 
   <div align="left"><h3>Messages</h3></div>
-  <div style="color:red" align="left" *ngFor='let message of messageService.messages'> {{message}} </div>
+  <div (domChange)="onDomChange($event)" style="color:red" align="left" *ngFor='let message of messageService.messages'> {{message}} </div>
 
 </div>

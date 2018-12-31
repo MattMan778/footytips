@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Fixture } from '../fixture';
 import { Tip } from '../tip';
 import { FixtureService } from '../fixture.service';
@@ -11,6 +11,8 @@ import { MessageService } from '../message.service';
   styleUrls: ['./tips.component.css']
 })
 export class TipsComponent implements OnInit {
+
+  @ViewChild('scrollWindow') private myScrollContainer: ElementRef;
 
   constructor(private fixtureService: FixtureService, private tipsService: TipsService, private messageService: MessageService) { }
 
@@ -31,6 +33,7 @@ export class TipsComponent implements OnInit {
   addTips() {
     this.messageService.clear();
     this.loading = true;
+    this.error = false;
     this.fixtures.forEach((fixture) => {
       if (typeof fixture.pick === 'undefined') {
         this.messageService.add(`Please make a selection for ${fixture.home_team} vs ${fixture.away_team}`)
@@ -47,4 +50,5 @@ export class TipsComponent implements OnInit {
       this.loading = false;
     }
   }
+
 }
